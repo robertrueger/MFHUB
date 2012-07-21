@@ -1,0 +1,106 @@
+# MFHUB
+
+MFHUB is a very small and simple code that performs mean field calculations for
+the two dimensional Hubbard model on a triangular lattice. It was written as an
+exercise for the lecture "Computational methods in solid state theory" that I
+attended during the summer term 2012 at the Goethe University of Frankfurt.
+
+In order to understand what MFHUB does, I suggest that you take a look at the
+corresponding lecture notes (itp.uni-frankfurt.de/~jeschke/CMSST/chapter6.pdf)
+and the exercise (itp.uni-frankfurt.de/~jeschke/CMSST/exercise7.pdf)
+that MFHUB attempts to solve.
+
+Feel free to contact me with any questions (or bugs!) that come up!
+
+
+## Building
+
+Note: This section assumes that you have the GNU software development tools
+like GCC, make and ld already installed on your machine.
+
+Before building MFHUB make sure that you have installed its dependencies.
+MFHUB distinguishes required and optional dependencies: While you don't need the
+optional dependencies to build MFHUB, you will not be able to automatically
+visualize your results without them.
+
+required:
+
+* [Eigen >3.1](http://eigen.tuxfamily.org/)
+* [GNU scientific library](http://www.gnu.org/software/gsl/)
+
+optional:
+
+* [gnuplot](http://www.gnuplot.info)
+
+Once you have the dependencies installed, building MFHUB is really simple and
+straightforward:
+
+    git clone git://github.com/robertrueger/MFHUB.git
+    cd MFHUB
+    make
+
+
+## Command line arguments
+
+    mfhub [uint s]
+          [float t] [float t_prime] [float U]
+          [uint N_SCC]
+          [float m_prec] [uint max_iterations]
+          [uint init] [float kT]
+          [uint plotmode]          
+
+  uint s
+Sets the size of the system. MFHUB will internally treat the triagular lattice
+as a square lattice with diagonal bonds, so the total number of sites in your
+system will be s*s.
+
+  float t, float t_prime, float U
+Sets the Hamiltonian parameters. Note that t_prime and U are measured relative
+to t, so it would be natural always to set t=1.
+
+  uint N_SCC
+Sets the total number of simulations performed by MFHUB. When using random
+initial conditions not every self-consistency cycle will converge to the real
+ground state, so you need to run many s.-c. cycles and select the one that yields
+the lowest total energy: The correct ground state is the self-consistent
+solution with the minimal energy!
+
+  float m_prec
+Sets the threshold for considerung a self-consistency cycle converged.
+
+  uint max_iterations
+Sets the maximum number of iterations until non-converged self-consistency cycles
+will be aborted.
+
+  uint init
+Sets the initial mean-field parameters.
+== 0: random within (0,1)
+== 1: checkerboard
+== 2: paramagnetic + initial Fermi-Dirac distributed (see lecture notes!)
+
+  float kT
+Sets the temperature used in the Fermi-Dirac distribution if init=2.
+
+  float plotmode
+Tells MFHUB which results to plot.
+== 0: no plotting
+== 1: plot best estimate of the ground state
+== 2: plot all converged solutions
+
+
+## License
+
+Copyright (c) 2012, Robert Rüger <rueger@itp.uni-frankfurt.de>
+
+MFHUB is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MFHUB is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MFHUB.  If not, see <http://www.gnu.org/licenses/>.
