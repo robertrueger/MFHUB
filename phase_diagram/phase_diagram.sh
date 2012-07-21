@@ -24,8 +24,8 @@ set -e
 # delete leftover files from former runs
 rm -rf $(ls . | grep -v phase_diagram)
 
-# link the mfhubcode executable
-ln -s ../mfhubcode mfhubcode
+# link the mfhub executable
+ln -s ../mfhub mfhub
 
 # constant parameters
 s=10;
@@ -45,7 +45,7 @@ for t_prime in 0.00 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 \
 do
     for U in 0 0.1 0.2 0.4 0.6 0.8 1.0 1.25 1.5 1.75 2.0 2.5 3 4 5 6 8 10 12 14 16
     do
-        ./mfhubcode $s $t $t_prime $U $N_SCC $m_prec $max_iterations $init $kT $plotmode
+        ./mfhub $s $t $t_prime $U $N_SCC $m_prec $max_iterations $init $kT $plotmode
     done
 done
 
